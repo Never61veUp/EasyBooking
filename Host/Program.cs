@@ -1,3 +1,5 @@
+using Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -5,6 +7,10 @@ builder.AddServiceDefaults();
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.AddNpgsqlDataSource(connectionName: "postgresdb");
+
+builder.Services.AddDbContext<EasyBookingDbContext>();
 
 var app = builder.Build();
 

@@ -4,10 +4,6 @@ namespace Core.Model;
 
 public sealed class Service : Entity<Guid>
 {
-    public string Name { get; }
-    public decimal Price { get; }
-    public TimeSpan Duration { get; }
-
     private Service(Guid id, string name, decimal price, TimeSpan duration)
     {
         Id = id;
@@ -15,6 +11,10 @@ public sealed class Service : Entity<Guid>
         Price = price;
         Duration = duration;
     }
+    
+    public string Name { get; }
+    public decimal Price { get; }
+    public TimeSpan Duration { get; }
 
     public static Result<Service> Create(Guid id, string name, decimal price, TimeSpan duration)
     {

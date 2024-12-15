@@ -4,7 +4,7 @@ namespace Core.Model.ValueObjects;
 
 public class FullName : ValueObject
 {
-    public string FirstName { get; set; }
+    public string FirstName { get; }
     public string LastName { get; }
     public string? MiddleName { get; }
     

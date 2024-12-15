@@ -13,7 +13,7 @@ public class Email : ValueObject
     }
     
     public string EmailAddress { get; }
-
+    
     public static Result<Email> Create(string email)
     {
         if (string.IsNullOrWhiteSpace(email))

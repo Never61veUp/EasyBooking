@@ -1,10 +1,12 @@
-﻿namespace Core.Model;
+﻿using CSharpFunctionalExtensions;
 
-public class Review
+namespace Core.Model;
+
+public class Review : Entity<Guid>
 {
-    public Guid Id { get; set; }
     public User User { get; set; }
     public string Content { get; set; }
     public DateTime Date { get; set; }
     public Specialist Specialist { get; set; }
+    
 }

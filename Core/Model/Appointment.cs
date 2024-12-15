@@ -4,13 +4,7 @@ namespace Core.Model;
 
 public sealed class Appointment : Entity<Guid>
 {
-    public Service Service { get; }
-    public Specialist Specialist { get;  }
-    public User Client { get; }
-    public DateTime AppointmentDate { get; }
-    public string Status { get; }
-
-    public Appointment(Guid id, Service service, Specialist specialist, User client, DateTime appointmentDate)
+    private Appointment(Guid id, Service service, Specialist specialist, User client, DateTime appointmentDate)
     {
         Id = id;
         Service = service;
@@ -19,7 +13,13 @@ public sealed class Appointment : Entity<Guid>
         AppointmentDate = appointmentDate;
         Status = "Pending";
     }
-
+    
+    public Service Service { get; }
+    public Specialist Specialist { get;  }
+    public User Client { get; }
+    public DateTime AppointmentDate { get; }
+    public string Status { get; }
+    
     public static Result<Appointment> Create(Guid id, Service service, Specialist specialist, User client,  DateTime appointmentDate)
     {
         if (appointmentDate <= DateTime.Now)

@@ -7,13 +7,13 @@ public class PhoneNumber : ValueObject
 {
     private const string phoneRegex = @"^\+?[1-9]\d{1,14}$";
     
-    public string Number { get; }
-
     private PhoneNumber(string number)
     {
         Number = number;
     }
-
+    
+    public string Number { get; }
+    
     public static Result<PhoneNumber> Create(string number)
     {
         if(String.IsNullOrWhiteSpace(number))

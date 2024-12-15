@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace Core.Model.ValueObjects;
+namespace Core.Model;
 
-public class Specialty : ValueObject
+public class Specialty : Entity<Guid>
 {
     public static readonly Specialty Hairdresser = new (nameof(Hairdresser));
     public static readonly Specialty Cosmetologist = new (nameof(Cosmetologist));
@@ -27,10 +27,5 @@ public class Specialty : ValueObject
             return Result.Failure<Specialty>($"{nameof(value)} is not a valid specialty.");
 
         return new Specialty(value);
-    }
-        
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        yield return Value;
     }
 }
