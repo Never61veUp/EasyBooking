@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Host\Host.csproj" />
+    <ProjectReference Include="..\..\MigrationService\MigrationService.csproj" />
   </ItemGroup>
 
 </Project>

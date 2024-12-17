@@ -8,9 +8,7 @@ builder.AddServiceDefaults();
 
 builder.Services.AddControllers();
 
-builder.AddNpgsqlDataSource(connectionName: "postgresdb");
-
-builder.Services.AddDbContext<EasyBookingDbContext>();
+builder.AddNpgsqlDbContext<EasyBookingDbContext>("EasyBookingDb");
 
 var app = builder.Build();
 

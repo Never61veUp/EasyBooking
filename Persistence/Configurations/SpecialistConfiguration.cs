@@ -29,7 +29,7 @@ public class SpecialistConfiguration : IEntityTypeConfiguration<SpecialistEntity
         builder.ComplexProperty(e => e.Email, b =>
         {
             b.IsRequired();
-            b.Property(x => x.EmailAddress).HasColumnName("Email").IsRequired();
+            b.Property(x => x.Email).HasColumnName("Email").IsRequired();
         });
         
         builder.HasMany(s => s.Services).WithOne(c => c.SpecialistEntity);

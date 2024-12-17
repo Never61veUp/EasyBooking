@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching.Redis", "Caching.Redis\Caching.Redis.csproj", "{52CF7A49-5EAD-44E3-8896-F689A98B59D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationService", "MigrationService\MigrationService.csproj", "{A4C063D1-F410-4598-8C64-70230E832096}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{52CF7A49-5EAD-44E3-8896-F689A98B59D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52CF7A49-5EAD-44E3-8896-F689A98B59D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52CF7A49-5EAD-44E3-8896-F689A98B59D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4C063D1-F410-4598-8C64-70230E832096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4C063D1-F410-4598-8C64-70230E832096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4C063D1-F410-4598-8C64-70230E832096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4C063D1-F410-4598-8C64-70230E832096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

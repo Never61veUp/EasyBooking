@@ -4,23 +4,23 @@ namespace Core.Model.ValueObjects;
 
 public class ContactInfo : ValueObject
 {
-    private ContactInfo(PhoneNumber phone, Email email)
+    private ContactInfo(PhoneNumber phone, EmailAddress emailAddress)
     {
         Phone = phone;
-        Email = email;
+        EmailAddress = emailAddress;
     }
     
     public PhoneNumber Phone { get; }
-    public Email Email { get; }
+    public EmailAddress EmailAddress { get; }
 
-    public static Result<ContactInfo> Create(PhoneNumber phone, Email email)
+    public static Result<ContactInfo> Create(PhoneNumber phone, EmailAddress emailAddress)
     {
-        return new ContactInfo(phone, email);
+        return new ContactInfo(phone, emailAddress);
     }
     
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Phone;
-        yield return Email;
+        yield return EmailAddress;
     }
 }

@@ -8,15 +8,23 @@ public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 {
     public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
-        builder.ComplexProperty(e => e.ContactInfo, contactInfo =>
+        builder.ToTable("User");
+        builder.HasKey(x => x.Id);
+        
+        builder.ComplexProperty(e => e.PhoneNumber, c =>
         {
-            contactInfo.Property(c => c.Phone).HasColumnName("Phone").HasMaxLength(15).IsRequired();
-            contactInfo.Property(c => c.Email).HasColumnName("Email").HasMaxLength(100).IsRequired();
+            // c.IsRequired();
+            c.Property(e => e.Number).HasColumnName("PhoneNumber");
+        });
+        builder.ComplexProperty(e => e.Email, c =>
+        {
+            // c.IsRequired();
+            c.Property(e => e.Email).HasColumnName("PhoneNumber");
         });
         
         builder.ComplexProperty(s => s.FullName, b =>
         {
-            b.IsRequired();
+            // b.IsRequired();
             b.Property(x => x.FirstName).HasColumnName("FirstName");
             b.Property(x => x.LastName).HasColumnName("LastName");
             b.Property(x => x.MiddleName).HasColumnName("MiddleName");
