@@ -5,31 +5,35 @@ namespace Core.Model;
 
 public sealed class Specialist : Entity<Guid>
 {
-    private readonly List<Specialty> _specialties;
     private readonly List<Service> _services;
     private readonly List<Review> _reviews;
-
-    private Specialist(Guid id, FullName fullName, string bio, List<Specialty> specialties, List<Service> services, List<Review> reviews, ContactInfo contactInfo)
+    
+    private Specialist(Guid id, FullName fullName, EmailAddress emailAddress, PhoneNumber phoneNumber, List<Service> services, List<Review> reviews) : base(id)
     {
-        Id = id;
         FullName = fullName;
-        _specialties = specialties;
-        Bio = bio;
+        EmailAddress = emailAddress;
+        PhoneNumber = phoneNumber;
         _services = services;
         _reviews = reviews;
-        ContactInfo = contactInfo;
     }
     
-    public FullName FullName { get; }
-    public IReadOnlyList<Specialty> Specialties => _specialties;
-    public string Bio { get; }
-    public IReadOnlyList<Service> Services => _services;
-    public IReadOnlyList<Review> Reviews => _reviews;
-    public ContactInfo ContactInfo { get; }
+    public FullName FullName { get; init; }
+    public EmailAddress EmailAddress { get;}
+    public PhoneNumber PhoneNumber { get;}
+    public IReadOnlyCollection<Service> Services => _services.AsReadOnly();
+    public IReadOnlyCollection<Review> Reviews => _reviews.AsReadOnly();
+    
 
-    public static Result<Specialist> Create(Guid id, FullName fullName, string bio, 
-        List<Specialty> specialties, List<Service> services, List<Review> reviews, ContactInfo contactInfo)
+    public static Result<Specialist> Create(Guid id, FullName fullName, EmailAddress emailAddress, PhoneNumber phoneNumber, List<Service> services, List<Review> reviews)
     {
-        return new Specialist(id, fullName, bio, specialties, services, reviews, contactInfo);
+        return Result.Success(new Specialist(id, fullName, emailAddress, phoneNumber, services, reviews));
+    }
+    public Result AddService(Service service)
+    {
+        if (_services.Any(s => s.Id == service.Id))
+            return Result.Failure("Service already exists");
+
+        _services.Add(service);
+        return Result.Success();
     }
 }
