@@ -4,27 +4,26 @@ namespace Core.Model;
 
 public sealed class Service : Entity<Guid>
 {
-    private Service(Guid id, string name, decimal price, TimeSpan duration)
+    private Service(Guid id, string title, decimal price, TimeSpan duration) : base(id)
     {
-        Id = id;
-        Name = name;
+        Title = title;
         Price = price;
         Duration = duration;
     }
     
-    public string Name { get; }
+    public string Title { get; }
     public decimal Price { get; }
     public TimeSpan Duration { get; }
 
-    public static Result<Service> Create(Guid id, string name, decimal price, TimeSpan duration)
+    public static Result<Service> Create(Guid id, string title, decimal price, TimeSpan duration)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            return Result.Failure<Service>("Service name cannot be empty.");
+        if (string.IsNullOrWhiteSpace(title))
+            return Result.Failure<Service>("Service title cannot be empty");
         if (price <= 0)
-            return Result.Failure<Service>("Price must be greater than zero.");
-        if (duration.TotalMinutes <= 0)
-            return Result.Failure<Service>("Duration must be greater than zero.");
-        
-        return new Service(id, name, price, duration);
+            return Result.Failure<Service>("Price must be greater than zero");
+        if (duration <= TimeSpan.Zero)
+            return Result.Failure<Service>("Duration must be greater than zero");
+
+        return Result.Success(new Service(id, title, price, duration));
     }
 }

@@ -1,29 +1,52 @@
-﻿using CSharpFunctionalExtensions;
+﻿using Core.Model.ValueObjects;
+using CSharpFunctionalExtensions;
 
 namespace Core.Model;
 
+public enum Status
+{
+    Pending,
+    Confirmed,
+    Cancelled,
+    Completed
+}
 public sealed class Appointment : Entity<Guid>
 {
-    private Appointment(Guid id, Service service, Specialist specialist, User client, DateTime appointmentDate)
+    private Appointment(Guid id, Guid masterId, Guid customerId, Guid serviceId, DateRange dateRange) : base(id)
     {
-        Id = id;
-        Service = service;
-        Specialist = specialist;
-        Client = client;
-        AppointmentDate = appointmentDate;
-        Status = "Pending";
+        MasterId = masterId;
+        CustomerId = customerId;
+        ServiceId = serviceId;
+        DateRange = dateRange;
+        Status = Status.Pending;
     }
     
-    public Service Service { get; }
-    public Specialist Specialist { get;  }
-    public User Client { get; }
-    public DateTime AppointmentDate { get; }
-    public string Status { get; }
-    
-    public static Result<Appointment> Create(Guid id, Service service, Specialist specialist, User client,  DateTime appointmentDate)
+    public Guid MasterId { get; }
+    public Guid CustomerId { get; }
+    public Guid ServiceId { get; }
+    public DateRange DateRange { get; }
+    public Status Status { get; private set; }
+
+    public static Result<Appointment> Create(Guid id, Guid masterId, Guid customerId, Guid serviceId, DateRange dateRange)
     {
-        if (appointmentDate <= DateTime.Now)
-            return Result.Failure<Appointment>("Appointment date must be in the future.");
-        return new Appointment(id, service, specialist, client, DateTime.Now);
+        return Result.Success(new Appointment(id, masterId, customerId, serviceId, dateRange));
+    }
+    public Result Cancel()
+    {
+        if (Status == Status.Cancelled)
+            return Result.Failure("Appointment is already canceled");
+
+        Status = Status.Cancelled;
+        return Result.Success();
+    }
+    public Result Confirm()
+    {
+        if (Status == Status.Cancelled)
+            return Result.Failure("Appointment is already canceled");
+        if (Status == Status.Confirmed)
+            return Result.Failure("Appointment is already confirmed");
+
+        Status = Status.Confirmed;
+        return Result.Success();
     }
 }
