@@ -1,15 +1,17 @@
-﻿using Persistence.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Persistence.Model;
 
 namespace Persistence.Configurations;
 
-public class SpecialistConfiguration : IEntityTypeConfiguration<SpecialistEntity>
+public class CustomerConfiguration: IEntityTypeConfiguration<CustomerEntity>
 {
-    public void Configure(EntityTypeBuilder<SpecialistEntity> builder)
+    public void Configure(EntityTypeBuilder<CustomerEntity> builder)
     {
+        builder.ToTable("Customers");
+        
         builder.HasKey(x => x.Id);
-
+        
         builder.ComplexProperty(s => s.FullName, b =>
         {
             b.IsRequired();
@@ -18,7 +20,7 @@ public class SpecialistConfiguration : IEntityTypeConfiguration<SpecialistEntity
             b.Property(x => x.MiddleName).HasColumnName("MiddleName");
         });
         
-        builder.ComplexProperty(e => e.Number, b =>
+        builder.ComplexProperty(e => e.PhoneNumber, b =>
         {
             b.IsRequired();
             b.Property(x => x.Number).HasColumnName("PhoneNumber").IsRequired();
@@ -29,9 +31,5 @@ public class SpecialistConfiguration : IEntityTypeConfiguration<SpecialistEntity
             b.IsRequired();
             b.Property(x => x.Email).HasColumnName("Email").IsRequired();
         });
-
-        builder.HasMany(s => s.Services);
-        builder.HasMany(s => s.Reviews);
-
     }
 }

@@ -12,9 +12,8 @@ public class ServiceConfiguration : IEntityTypeConfiguration<ServiceEntity>
         
         builder.HasKey(x => x.Id);
         
-        builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
-        builder.Property(x => x.Price).HasMaxLength(20).IsRequired();
+        builder.Property(x => x.Title).HasMaxLength(50).IsRequired();
+        builder.Property(x => x.Price).HasMaxLength(10).IsRequired();
         builder.Property(x => x.Duration).HasMaxLength(50).IsRequired();
-        builder.HasOne<SpecialistEntity>(x => x.SpecialistEntity).WithMany(x => x.Services);
     }
 }

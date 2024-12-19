@@ -1,11 +1,12 @@
-﻿using CSharpFunctionalExtensions;
+﻿using Core.Model.ValueObjects;
+using CSharpFunctionalExtensions;
 
 namespace Persistence.Model;
 
 public class ReviewEntity : Entity<Guid>
 {
-    public UserEntity User { get; set; }
-    public string Content { get; set; }
-    public DateTime Date { get; set; }
-    public SpecialistEntity Specialist { get; set; }
+    public CustomerEntity Customer { get; set; }
+    public string Text { get; set; }
+    public Rating Rating { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

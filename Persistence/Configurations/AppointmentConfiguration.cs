@@ -12,11 +12,18 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<AppointmentEnti
         builder.ToTable("Appointment");
         builder.HasKey(x => x.Id);
 
-        builder.HasOne<ServiceEntity>(x => x.Service);
-        builder.HasOne<SpecialistEntity>(x => x.Specialist);
-        builder.HasOne<UserEntity>(x => x.Client);
-        builder.Property(x => x.AppointmentDate);
+        builder.ComplexProperty(s => s.DateRange, b =>
+        {
+            b.IsRequired();
+            b.Property(x => x.Start).HasColumnName("Start");
+            b.Property(x => x.End).HasColumnName("End");
+        });
         
-        builder.Property(x => x.Status).IsRequired().HasDefaultValue("pending");
+        builder.HasOne<SpecialistEntity>(x => x.Specialist);
+        builder.HasOne<CustomerEntity>(x => x.Customer);
+        builder.HasOne<ServiceEntity>(x => x.Service);
+        
+        builder.Property(e => e.Status)
+            .IsRequired();
     }
 }

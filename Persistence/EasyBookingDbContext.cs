@@ -14,21 +14,19 @@ public class EasyBookingDbContext : DbContext
         
     }
     
-    public DbSet<AppointmentEntity> Tasks { get; set; }
+    public DbSet<AppointmentEntity> Appointments { get; set; }
+    public DbSet<CustomerEntity> Customers { get; set; }
     public DbSet<ReviewEntity> Reviews { get; set; }
     public DbSet<ServiceEntity> Services { get; set; }
     public DbSet<SpecialistEntity> Specialists { get; set; }
-    public DbSet<SpecialtyEntity> Specialties { get; set; }
-    public DbSet<UserEntity> Users { get; set; }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new SpecialistConfiguration());
         modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
         modelBuilder.ApplyConfiguration(new ReviewConfiguration());
         modelBuilder.ApplyConfiguration(new ServiceConfiguration());
-        
-        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new CustomerConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

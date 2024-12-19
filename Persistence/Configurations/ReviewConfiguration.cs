@@ -11,10 +11,17 @@ public class ReviewConfiguration : IEntityTypeConfiguration<ReviewEntity>
     {
         builder.ToTable("Review");
         
+        builder.ComplexProperty(s => s.Rating, b =>
+        {
+            b.IsRequired();
+            b.Property(x => x.Value).HasColumnName("Rating");
+        });
+        
         builder.HasKey(x => x.Id);
-
-        builder.HasOne<UserEntity>(x => x.User);
-        builder.Property(x => x.Content).HasMaxLength(255);
-        builder.Property(x => x.Date);
+        builder.HasOne(x => x.Customer);
+        builder.Property(x => x.Text).HasMaxLength(255);
+        builder.Property(x => x.CreatedAt)
+            .HasDefaultValueSql("NOW()")
+            .IsRequired();;
     }
 }
