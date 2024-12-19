@@ -1,5 +1,7 @@
+using Application.Services;
 using MigrationService;
 using Persistence;
+using Persistence.Repositories;
 
 var builder = Host.CreateApplicationBuilder(args);
 

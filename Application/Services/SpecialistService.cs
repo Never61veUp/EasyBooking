@@ -20,12 +20,11 @@ public class SpecialistService : ISpecialistService
     public async Task<Result<List<Specialist>>> GetAllSpecialistsAsync()
     {
         var specialistEntitiesResult = await _specialistRepository.GetAllSpecialistsAsync();
-        if (!specialistEntitiesResult.IsFailure) 
+        if (specialistEntitiesResult.IsFailure) 
             return Result.Failure<List<Specialist>>(specialistEntitiesResult.Error);
         
         var specialists = _mapper.Map<List<Specialist>>(specialistEntitiesResult.Value);
         return Result.Success(specialists);
-
     }
     public async Task<Result<Specialist>> AddNewSpecialist(Specialist specialist)
     {
