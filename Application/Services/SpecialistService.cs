@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Model;
+using CSharpFunctionalExtensions;
 using Persistence.Model;
 using Persistence.Repositories;
 
@@ -16,21 +17,53 @@ public class SpecialistService : ISpecialistService
         _mapper = mapper;
     }
 
-    public async Task<List<Specialist>> GetAllSpecialists()
+    public async Task<Result<List<Specialist>>> GetAllSpecialistsAsync()
     {
-        var specialists = await _specialistRepository.GetAllSpecialistsAsync();
-        return _mapper.Map<List<Specialist>>(specialists);
-    }
+        var specialistEntitiesResult = await _specialistRepository.GetAllSpecialistsAsync();
+        if (!specialistEntitiesResult.IsFailure) 
+            return Result.Failure<List<Specialist>>(specialistEntitiesResult.Error);
+        
+        var specialists = _mapper.Map<List<Specialist>>(specialistEntitiesResult.Value);
+        return Result.Success(specialists);
 
-    public async Task<bool> AddNewSpecialist(Specialist specialist)
+    }
+    public async Task<Result<Specialist>> AddNewSpecialist(Specialist specialist)
     {
         var specialistEntity = _mapper.Map<SpecialistEntity>(specialist);
-        return await _specialistRepository.AddNewSpecialist(specialistEntity);
+        
+        var specialistEntityResult = await _specialistRepository.AddNewSpecialistAsync(specialistEntity);
+        if (specialistEntityResult.IsFailure) 
+            return Result.Failure<Specialist>(specialistEntityResult.Error);
+        
+        return Result.Success(specialist);
     }
-}
-
-public interface ISpecialistService
-{
-    Task<List<Specialist>> GetAllSpecialists();
-    Task<bool> AddNewSpecialist(Specialist specialist);
+    public async Task<Result<Specialist>> GetSpecialistByIdAsync(Guid id)
+    {
+        var specialistEntityResult = await _specialistRepository.GetSpecialistByIdAsync(id);
+        
+        if(specialistEntityResult.IsFailure)
+            return Result.Failure<Specialist>(specialistEntityResult.Error);
+        
+        var specialist = _mapper.Map<Specialist>(specialistEntityResult.Value);
+        return Result.Success(specialist);
+    }
+    public async Task<Result<Specialist>> UpdateSpecialist(Specialist specialist)
+    {
+        var specialistEntity = _mapper.Map<SpecialistEntity>(specialist);
+        
+        var specialistsEntityResult = await _specialistRepository.UpdateSpecialist(specialistEntity);
+        if(specialistsEntityResult.IsFailure)
+            return Result.Failure<Specialist>(specialistsEntityResult.Error);
+        
+        return Result.Success(specialist);
+    }
+    public async Task<Result> DeleteSpecialistAsync(Guid id)
+    {
+        var specialistResult = await _specialistRepository.DeleteSpecialistAsync(id);
+        
+        if(specialistResult.IsFailure)
+            return Result.Failure(specialistResult.Error);
+        
+        return Result.Success();
+    }
 }
